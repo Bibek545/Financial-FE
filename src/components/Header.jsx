@@ -4,6 +4,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { useUser } from "../context/UserContext";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const { user, setUser } = useUser();
@@ -18,8 +19,12 @@ const Header = () => {
             <Nav className="me-auto">
               {user?._id ? (
                 <>
-                  <Nav.Link href="/dashboard">Dashboard</Nav.Link>
-                  <Nav.Link href="/transaction">Transaction</Nav.Link>
+                  <Nav.Link as={Link} to="/dashboard">
+                    Dashboard
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="/transaction">
+                    Transaction
+                  </Nav.Link>
                   <Button
                     variant="warning"
                     onClick={() => {
@@ -32,8 +37,12 @@ const Header = () => {
                 </>
               ) : (
                 <>
-                  <Nav.Link href="/login">Login</Nav.Link>
-                  <Nav.Link href="/signup">Singnup</Nav.Link>
+                  <Nav.Link as={Link} to="/login">
+                    Login
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="/signup">
+                    Singnup
+                  </Nav.Link>
                 </>
               )}
             </Nav>

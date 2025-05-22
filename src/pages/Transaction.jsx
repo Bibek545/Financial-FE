@@ -24,9 +24,6 @@ const Transaction = () => {
   // list of ids to delete
   const [idsToDelete, setIdsToDelete] = useState([]);
 
-  // to select all
-  const [selectAll, setSelectAll] = useState();
- 
   //   modal variables
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -116,21 +113,6 @@ const Transaction = () => {
     }
   };
 
-  const handleSelectAll  = (e) => {
-   const isChecked = e.target.checked;
-    setSelectAll(isChecked);
-    if(isChecked) {
-      // select all ids
-      const allIds = filteredTransactions.map((t) => t._id);
-      setIdsToDelete(allIds);
-
-
-    } else {
-      // deselect all ids
-      setIdsToDelete([]);
-    }
-    
-    };
   // fill trasactions by calling api
   useEffect(() => {
     // fetch api call
@@ -159,8 +141,9 @@ const Transaction = () => {
             {filteredTransactions.length} no of transactions
             <Form.Check // prettier-ignore
               type="checkbox"
-              onChange={handleSelectAll}
-              checked={selectAll}
+              onClick={(e) => {
+                handleOnCheckBox(e, t._id);
+              }}
               label="Select All"
             />
             {idsToDelete.length > 0 ? (

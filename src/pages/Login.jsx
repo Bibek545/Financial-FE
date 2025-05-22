@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import CustomInputs from "../components/CustomInputs";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { loginUser } from "../helpers/axiosHelper";
 import { toast } from "react-toastify";
 import { useUser } from "../context/UserContext";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setUser } = useUser();
+  const location = useLocation();
+  const { user, setUser } = useUser();
 
   const [form, setForm] = useState({
     email: "",
@@ -46,6 +47,7 @@ const Login = () => {
     event.preventDefault();
     console.log("FORM DATA", form);
 
+    // call login api
     const data = await loginUser(form);
 
     console.log("RESPONSE", data);
@@ -58,6 +60,12 @@ const Login = () => {
       navigate("/dashboard");
     }
   };
+
+  const goBack = location?.state?.from?.pathname || "/dashboard";
+
+  useEffect(() => {
+    user?._id && navigate(goBack);
+  }, [user?._id]);
 
   return (
     <div className="bg-dark p-4 text-white rounded">

@@ -84,3 +84,11 @@ export const deleteTransactionsByIdsAPI = (ids) => {
     isPrivate: true,
   });
 };
+
+export const fetchUserAPI = () => {
+  return apiProcessor({
+    method: "get",
+    url: apiEP + "/auth/user",
+    isPrivate: true,
+  });
+};
